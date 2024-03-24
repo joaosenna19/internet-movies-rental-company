@@ -1,9 +1,9 @@
-import Image from "next/image";
+import MovieList from "@/components/MovieList";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Here I'm</h1>
+      <MovieList />
     </main>
   );
 }
