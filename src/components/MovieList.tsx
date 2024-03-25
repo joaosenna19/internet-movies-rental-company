@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { CardContent, Card } from "@/components/ui/card";
 import MovieRow from "./MovieRow";
+import Link from "next/link";
 
 const movies = [
   {
@@ -30,12 +31,14 @@ const MovieList = () => {
       <div className="w-full grid max-w-4xl gap-4 px-4 mx-auto lg:px-6">
         <div className="flex items-center gap-4">
           <h1 className="flex-1 font-semibold text-xl">Movies</h1>
-          <Button
-            size="sm"
-            className="bg-green-500 text-white hover:bg-green-400"
-          >
-            Add movie
-          </Button>
+          <Link href="/?addmodal=true">
+            <Button
+              size="sm"
+              className="bg-green-500 text-white hover:bg-green-400"
+            >
+              Add movie
+            </Button>
+          </Link>
         </div>
         <div className="grid gap-4">
           <Card>
