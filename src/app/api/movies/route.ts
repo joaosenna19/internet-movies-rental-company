@@ -24,3 +24,31 @@ export async function POST(req: NextRequest) {
         return Response.json({ error: error.message });
 }
 }
+
+export async function DELETE(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const query = searchParams.get("id");
+    const movie = await prisma.movie.delete({
+        where: {
+            id: query,
+        },
+    });
+    return Response.json(movie);
+}
+
+export async function PUT(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const query = searchParams.get("id");
+    const { title, actors, year } = await req.json();
+    const movie = await prisma.movie.update({
+        where: {
+            id: query,
+        },
+        data: {
+            title,
+            actors,
+            year,
+        },
+    });
+    return Response.json(movie);
+}

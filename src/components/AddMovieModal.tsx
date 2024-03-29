@@ -8,6 +8,7 @@ import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormItem } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 
 const AddMovieModal = () => {
   const searchParams = useSearchParams();
@@ -35,8 +36,23 @@ const AddMovieModal = () => {
 
   const onSubmit: SubmitHandler<movieSchema> = (data) => {
     form.clearErrors();
-    console.log(data);
+    fetch("/api/movies", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          toast({variant: "destructive", title: "Error", description: "There was an error adding the movie"})
+        } else {
+          form.reset();
+        }
+      });
+      toast({title: "Movie added",
+      description: "The movie was added successfully",})
   };
+
+  const { toast } = useToast()
 
   return (
     <>

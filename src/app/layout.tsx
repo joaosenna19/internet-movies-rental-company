@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import AddMovieModal from "@/components/AddMovieModal";
 import DeleteMovieModal from "@/components/DeleteMovieModal";
 import EditMovieModal from "@/components/EditMovieModal";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <NavBar />
         {children}
         <Footer />
+        <Toaster/>
         <AddMovieModal />
         <EditMovieModal />
         <DeleteMovieModal />

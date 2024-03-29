@@ -1,10 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams,  } from "next/navigation";
+import { useRouter } from "next/navigation";
 const DeleteMovieModal = () => {
   const searchParams = useSearchParams();
   const modal = searchParams.get("deletemodal");
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/movies?id=${searchParams.get("id")}`, {
+        method: "DELETE",
+      });
+      console.log(response);
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       {modal && (
@@ -15,7 +29,7 @@ const DeleteMovieModal = () => {
               <Link href="/">
                 <Button variant="destructive">Cancel</Button>
               </Link>
-              <Button variant="outline">Delete</Button>
+              <Button variant="outline" onClick={handleDelete}>Delete</Button>
             </div>
           </div>
         </div>
