@@ -1,3 +1,4 @@
+'use client';
 import { Button } from "@/components/ui/button";
 import {
   TableHead,
@@ -9,23 +10,23 @@ import {
 import { CardContent, Card } from "@/components/ui/card";
 import MovieRow from "./MovieRow";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const movies = [
-  {
-    title: "The Shawshank Redemption",
-    actors: "Tim Robbins, Morgan Freeman",
-    year: 1994,
-  },
-  { title: "The Godfather", actors: "Marlon Brando, Al Pacino", year: 1972 },
-  { title: "Pulp Fiction", actors: "John Travolta, Uma Thurman", year: 1994 },
-  {
-    title: "The Dark Knight",
-    actors: "Christian Bale, Heath Ledger",
-    year: 2008,
-  },
-];
+
+
+
 
 const MovieList = () => {
+  
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/movies")
+      .then((response) => response.json())
+      .then((data) => setMovies(data));
+
+  }, []);
+
   return (
     <div className="flex  items-start py-4  lg:py-10">
       <div className="w-full grid max-w-4xl gap-4 px-4 mx-auto lg:px-6">
@@ -53,6 +54,7 @@ const MovieList = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
+                  
                   {movies.map((movie, index) => (
                     <MovieRow key={index} movie={movie} />
                   ))}

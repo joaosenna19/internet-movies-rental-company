@@ -7,8 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { z } from "zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormItem } from "@/components/ui/form";
-import { error } from "console";
+import { Form, FormItem } from "@/components/ui/form";
 
 const AddMovieModal = () => {
   const searchParams = useSearchParams();
