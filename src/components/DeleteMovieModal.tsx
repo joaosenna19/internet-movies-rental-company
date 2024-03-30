@@ -3,17 +3,20 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSearchParams,  } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
+
 const DeleteMovieModal = () => {
   const searchParams = useSearchParams();
   const modal = searchParams.get("deletemodal");
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/movies?id=${searchParams.get("id")}`, {
         method: "DELETE",
       });
-      console.log(response);
+      toast({title: "Movie deleted", description: "The movie was deleted successfully",});
       router.push("/");
     } catch (error) {
       console.error(error);

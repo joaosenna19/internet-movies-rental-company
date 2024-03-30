@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormItem } from "@/components/ui/form";
 import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const EditMovieModal = () => {
   const searchParams = useSearchParams();
@@ -43,8 +44,10 @@ const EditMovieModal = () => {
       title: title,
       actors: actors,
       year: year,
-    }
+    },
   });
+
+  const { toast } = useToast();
 
   const onSubmit: SubmitHandler<movieSchema> = (data) => {
     form.clearErrors();
@@ -52,18 +55,17 @@ const EditMovieModal = () => {
       fetch(`/api/movies?id=${id}`, {
         method: "PUT",
         body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
+      }).then((response) => response.json());
+      toast({
+        title: "Movie updated",
+        description: "The movie was updated successfully",
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    
     form.reset({ title, actors, year });
   }, [title, actors, year]);
 
@@ -79,17 +81,21 @@ const EditMovieModal = () => {
               <div className="space-y-2 text-center">
                 <h2 className="text-2xl font-bold">Edit a Movie</h2>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <FormItem>
                     <div className="space-y-2">
                       <Label>Title</Label>
                       <Input
-                      
-                      placeholder="Movie's title"
+                        placeholder="Movie's title"
                         {...form.register("title")}
                       />
+                      {form.formState.errors.title && (
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.title.message}
+                        </p>
+                      )}
                     </div>
                   </FormItem>
                   <FormItem>
@@ -99,6 +105,11 @@ const EditMovieModal = () => {
                         placeholder="List of actors separated by comma"
                         {...form.register("actors")}
                       />
+                      {form.formState.errors.actors && (
+                        <p className="text-red-500 text-xs">
+                          {form.formState.errors.actors.message}
+                        </p>
+                      )}
                     </div>
                   </FormItem>
                 </div>
@@ -107,15 +118,22 @@ const EditMovieModal = () => {
                     <Label>Year</Label>
                     <Input
                       placeholder="Year of release"
-                      type="tel"
+                      
                       {...form.register("year")}
                     />
+                    {form.formState.errors.year && (
+                    <p className="text-red-500 text-xs">
+                      {form.formState.errors.year.message}
+                    </p>
+                  )}
                   </div>
                 </FormItem>
               </div>
               <div className="flex justify-end space-x-2">
                 <Link href="/">
-                  <Button variant="destructive" onClick={() => form.reset}>Cancel</Button>
+                  <Button variant="destructive" onClick={() => form.reset}>
+                    Cancel
+                  </Button>
                 </Link>
                 <Button
                   type="submit"
@@ -123,7 +141,6 @@ const EditMovieModal = () => {
                 >
                   Save
                 </Button>
-                
               </div>
             </form>
           </Form>

@@ -10,27 +10,32 @@ import {
 import { CardContent, Card } from "@/components/ui/card";
 import MovieRow from "./MovieRow";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
-
-
+import { use, useEffect, useState } from "react";
+import {  useSearchParams } from "next/navigation";
 
 
 const MovieList = () => {
-  
+
+  const params = useSearchParams();
   const [movies, setMovies] = useState([]);
 
+  const fetchMovies = async () => {
+    fetch("/api/movies").then((response) => response.json()).then((data) => setMovies(data))};
+
   useEffect(() => {
-    fetch("/api/movies")
-      .then((response) => response.json())
-      .then((data) => setMovies(data));
+    fetchMovies();
 
   }, []);
 
+  useEffect(() => {
+    if(!params.get("addmodal") && !params.get("editmodal") && !params.get("deletemodal"))
+    fetchMovies();
+  });
+
   return (
-    <div className="flex  items-start py-4  lg:py-10">
-      <div className="w-full grid max-w-4xl gap-4 px-4 mx-auto lg:px-6">
-        <div className="flex items-center gap-4">
+    <div className="flex items-start ">
+      <div className="w-full grid gap-4 px-4 mx-auto ">
+        <div className="flex  gap-4">
           <h1 className="flex-1 font-semibold text-xl">Movies</h1>
           <Link href="/?addmodal=true">
             <Button
@@ -56,7 +61,7 @@ const MovieList = () => {
                 <TableBody>
                   
                   {movies.map((movie, index) => (
-                    <MovieRow key={index} movie={movie} />
+                    <MovieRow key={index} movie={movie}/>
                   ))}
                 </TableBody>
               </Table>
