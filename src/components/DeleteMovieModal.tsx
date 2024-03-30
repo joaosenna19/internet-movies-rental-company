@@ -13,7 +13,7 @@ const DeleteMovieModal = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/movies?id=${searchParams.get("id")}`, {
+      await fetch(`/api/movies?id=${searchParams.get("id")}`, {
         method: "DELETE",
       });
       toast({title: "Movie deleted", description: "The movie was deleted successfully",});
