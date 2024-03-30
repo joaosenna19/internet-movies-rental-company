@@ -14,11 +14,12 @@ type MovieRowProps = {
 const MovieRow = (props: MovieRowProps) => {
   let { title, actors, year, id } = props.movie;
   const actorsFormatted = actors.join(", ");
+  console.log(actorsFormatted);
 
   return (
     <TableRow key={id}>
       <TableCell className="font-medium">{title}</TableCell>
-      <TableCell>{actors}</TableCell>
+      <TableCell>{actorsFormatted}</TableCell>
       <TableCell>{year}</TableCell>
       <TableCell className="text-right">
         <div className="flex gap-2">

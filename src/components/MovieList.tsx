@@ -10,7 +10,7 @@ import {
 import { CardContent, Card } from "@/components/ui/card";
 import MovieRow from "./MovieRow";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {  useSearchParams } from "next/navigation";
 
 
@@ -30,7 +30,7 @@ const MovieList = () => {
   useEffect(() => {
     if(!params.get("addmodal") && !params.get("editmodal") && !params.get("deletemodal"))
     fetchMovies();
-  });
+  }, [params]);
 
   return (
     <div className="flex items-start ">
