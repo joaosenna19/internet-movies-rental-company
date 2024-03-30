@@ -1,9 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { TableRow, TableCell } from "@/components/ui/table";
 import Link from "next/link";
-const MovieRow = (props) => {
+
+type MovieRowProps = {
+  movie: {
+    title: string;
+    actors: string[];
+    year: number;
+    id: string;
+  };
+};
+
+const MovieRow = (props: MovieRowProps) => {
   let { title, actors, year, id } = props.movie;
-  actors = actors.join(", ");
+  const actorsFormatted = actors.join(", ");
 
   return (
     <TableRow key={id}>
@@ -13,7 +23,7 @@ const MovieRow = (props) => {
       <TableCell className="text-right">
         <div className="flex gap-2">
           <Link
-            href={`/?editmodal=true&id=${id}&title=${title}&actors=${actors}&year=${year}`}
+            href={`/?editmodal=true&id=${id}&title=${title}&actors=${actorsFormatted}&year=${year}`}
           >
             <Button size="icon" className="px-6" variant="outline">
               Edit
